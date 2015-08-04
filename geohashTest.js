@@ -1,9 +1,11 @@
 var geohash = function() {
+
 	/**
 	 * [10000,01000,00100,00010,00001]
 	 * @type {Array}
 	 */
 	var _Bits = [16, 8, 4, 2, 1];
+
 	/**
 	 * 字符数组
 	 * @type {Array}
@@ -140,7 +142,6 @@ var geohash = function() {
 	 *    
 	 *    [-1,-1]bottomLeft   [-1,0]bottom    [-1,1]bottomRight
 	 */
-
 	var expand = function(geohashString) {
 		if (!geohashString || typeof(geohashString) !== 'string') {
 			throw new Error("invalid parameter: geohashString");
@@ -161,6 +162,7 @@ var geohash = function() {
 		}
 		return neighbors;
 	};
+	
 	/**
 	 * 获取某个方位的geohash字符串
 	 * @param  {string} geohashString    geohash字符串
