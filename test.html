@@ -1,0 +1,26 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript" src="geohashTest.js"></script>
+<script type="text/javascript">
+window.onload = function  () {
+	// for test
+	var b = geohash.encode(37.8324, 112.5584, 9);
+	console.log("parameters:"+"37.8324"+","+"112.5584"+","+"9");
+	console.log(b);
+	var a = geohash.decode(b);
+	console.log("lat:"+a.lat.toString()+" lon:"+a.lon.toString());
+	var neighborAll = geohash.expand("wx4g0");
+	for(var o in neighborAll){
+		console.log(o+":"+neighborAll[o]);
+	}
+	var topRightStr = geohash.getNeighbor("wx4g0",[1,1]);
+	console.log(topRightStr);
+};
+</script>
+</html>

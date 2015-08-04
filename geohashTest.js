@@ -180,6 +180,6 @@ var geohash = function() {
 		encode: encode,
 		decode: decode,
 		expand: expand,
-		neighbor: getNeighbor
+		getNeighbor: getNeighbor
 	};
 }();
