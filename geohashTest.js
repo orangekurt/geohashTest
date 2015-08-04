@@ -42,14 +42,14 @@ var geohash = function() {
 			if (even) {
 				mid = (_lon[0] + _lon[1]) / 2;
 				if (longitude > mid) {
-					ch = ch | _Bits[bit];
+					ch = ch | _Bits[bit];//或运算，当在右侧区间时，经度位为1
 					_lon[0] = mid;
 				} else
 					_lon[1] = mid;
 			} else {
 				mid = (_lat[0] + _lat[1]) / 2;
 				if (latitude > mid) {
-					ch = ch | _Bits[bit];
+					ch = ch | _Bits[bit];//或运算，当在上方区间时，纬度位为1
 					_lat[0] = mid;
 				} else
 					_lat[1] = mid;
@@ -87,7 +87,7 @@ var geohash = function() {
 			}
 			for (var j = 0; j < 5; j++) {
 				var mask = _Bits[j];
-				if (even) {
+				if (even) {//五位二进制 第一位为经度,第二个为纬度，依此类推下去
 					_lon = refineInterval(_lon, ch, mask);
 				} else {
 					_lat = refineInterval(_lat, ch, mask);
@@ -97,13 +97,20 @@ var geohash = function() {
 		}
 
 		return {
-			lat: (_lat[0] + _lat[1]) / 2,
-			lon: (_lon[0] + _lon[1]) / 2,
+			lat: (_lat[0] + _lat[1]) / 2,//默认取区块中心纬度,有误差 
+			lon: (_lon[0] + _lon[1]) / 2,//默认取区块中心经度,有误差
 			latInterval: _lat,
 			lonInterval: _lon
 		};
 	};
 
+	/**
+	 * 求取经纬度区间
+	 * @param  {array} interval 区间数组
+	 * @param  {number} ch      字母所对应的值 (如 w--> 28 即 11100)
+	 * @param  {number} mask    _Bits[i] ([16, 8, 4, 2, 1] 即[10000,01000,00100,00010,00001])
+	 * @return {array}          区间数组
+	 */
 	var refineInterval = function(interval, ch, mask) {
 		if ((ch & mask) !== 0) {
 			interval[0] = (interval[0] + interval[1]) / 2;
@@ -112,6 +119,7 @@ var geohash = function() {
 		}
 		return interval;
 	};
+
 	/**
 	 * 获取某个geohash周边的八个相邻区块的geohash
 	 * @param  {string} geohashString geohash字符串
